@@ -1,0 +1,109 @@
+file = open(r"C:\Users\pawel\Desktop\Pliki\Coding\VS_Code\Python\matura_2022\liczby.txt")
+data = file.read().split("\n")
+for i in range(len(data)) :
+    _ = data[i]
+    if len(_) > 0 :
+        data[i] = int(data[i])
+    else :
+        data.pop()
+data.sort()
+length = len(data)
+
+numbers = []
+i = 0
+while i < len(data) :
+    number = data[i]
+    multis = []
+    j = i
+    while j < len(data) :
+        if data[j] % number == 0 :
+            multis.append(data[j])
+        j += 1
+    numbers.append(multis)
+    i += 1
+
+    
+numbers.sort(key = len,reverse = True)
+
+def n_s(n) :
+    num_dict = {}
+    for i in numbers :
+        num_dict[i[0]] = i
+    sets = []
+    def seek(number, num_list, level = 0) :
+        nonlocal num_dict,sets,n
+        if len(num_list) == n :
+            sets.append(num_list)
+            return
+        for i in num_dict[number] :
+            if i == number or i not in num_dict :
+                continue
+            seek(i,num_list + [i],level+1)
+            
+    for i in num_dict :
+        seek(i,[i])
+        
+    if n == 3 :
+        for _ in sets :
+            print(_[0],_[1],_[2])
+    return len(sets)
+    
+print(n_s(3))
+print(n_s(5))
+
+#def threes() :
+#    global numbers
+#    num_dict = {}
+#    for i in numbers :
+#        if len(i) < 2 :
+#            break
+#        num_dict[i[0]] = i
+#    sets = []
+#    for i in num_dict :
+#        for j in num_dict[i] :
+#            if i == j :
+#                continue
+#            if j not in num_dict :
+#                continue
+#            for k in num_dict[j] :
+#                if k == j :
+#                    continue
+#                sets.append([i,j,k])
+#    return sets
+#                
+# 
+#sets_threes = threes()
+#print(len(sets_threes))
+#for _ in sets_threes:
+#    print(_[0],_[1],_[2])
+#print("===")    
+#
+#    
+#def fives() :
+#    global numbers
+#    num_dict = {}
+#    for i in numbers :
+#        if len(i) < 2 :
+#            break
+#        num_dict[i[0]] = i
+#    sets = []
+#    for i in num_dict :
+#        for j in num_dict[i] :
+#            if i == j or j not in num_dict :
+#                continue
+#            for k in num_dict[j] :
+#                if j == k or k not in num_dict :
+#                    continue
+#                for l in num_dict[k] :
+#                    if k == l or l not in num_dict :
+#                        continue
+#                    for m in num_dict[l] :
+#                        if l == m :
+#                            continue
+#                        sets.append([i,j,k,l,m])
+#    return sets
+#
+#sets_fives = fives()
+#print(len(sets_fives))
+#for _ in sets_fives:
+#    print(_[0],_[1],_[2],_[3],_[4])
